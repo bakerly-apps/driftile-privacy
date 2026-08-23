@@ -124,7 +124,7 @@
 </tr>
 <tr>
 <td>Notifications</td>
-<td><strong>ACTIVE</strong> — only to tell you a friend has invited you to a game. Nothing else is ever sent, and you can refuse or turn them off</td>
+<td><strong>ACTIVE</strong> — a friend's challenge or invitation, and occasional notices from us about the game itself. You can refuse them, or turn them off so nothing is sent at all</td>
 <td><a href="#4-permissions">4</a></td>
 </tr>
 <tr>
@@ -226,7 +226,7 @@
 </tr>
 <tr>
 <td>Settings</td>
-<td>Sound on/off, haptics on/off, motion preference, colour-shapes accessibility mode, chosen language, whether kids mode is on, and whether you have opted in to sharing anonymous gameplay statistics — which is <strong>off unless you turn it on</strong></td>
+<td>Sound on/off, colour-shapes accessibility mode, chosen language, and whether kids mode is on</td>
 <td><code>group:settings</code></td>
 </tr>
 <tr>
@@ -238,6 +238,21 @@
 <td>Reminder <em>(conditional)</em></td>
 <td>The hour you chose for the daily reminder</td>
 <td><code>group:notifications:dailyHour</code></td>
+</tr>
+<tr>
+<td>Twist explanations</td>
+<td>Which of the extra-rule explanation cards you have already been shown, and whether you asked not to be shown any more</td>
+<td><code>group:progress</code></td>
+</tr>
+<tr>
+<td>Offers already shown</td>
+<td>Which of the in-app store offers you have been shown, so none is shown to you twice</td>
+<td><code>group:progress</code></td>
+</tr>
+<tr>
+<td>Your friends list <em>(conditional)</em></td>
+<td><strong>Other people's data.</strong> For each person on your friends list: the pseudonymous id the server identifies them by, their display name, their chosen picture and frame, and the figures their privacy setting lets you see. Written only if you use Play together, kept so the list still opens with no connection, replaced each time it loads, and deleted if the game is handed over to somebody else. It is <strong>never</strong> copied to your account on our server</td>
+<td><code>group:friends:list</code></td>
 </tr>
 <tr>
 <td>Sign-in <em>(conditional)</em></td>
@@ -389,9 +404,9 @@
 <p>If you do sign in, you give us <strong>an email address</strong>. We send it to Supabase, our server provider, who mails you a sign-in code through Resend, our mail provider. We hold the address so we can recognise you next time, and it is not used for anything else — no newsletters, no marketing, and it is never sold or shared.</p>
 <p>You may also sign in with Google, in which case Google tells us the email address on the account you pick, and nothing else.</p>
 <p><strong>What cloud save copies to our server.</strong> From the moment you are signed in, the app keeps your account in step with your device. What is held there is:</p>
-<ul><li>every level you have completed, your best move count for each, your stars, how many times you played it, and whether you solved it without an undo or a hint</li><li>the highest level you have unlocked and the one you last played, including the half-finished position on the board if you left mid-level</li><li>your daily streak, your longest streak and your daily results</li><li>your lifetime statistics — total moves, undos, restarts, hints used, levels skipped, dead ends reached and time spent playing</li><li>which of the in-game awards you have earned</li><li>how many hints and jokers you own, and how many you have ever earned and spent</li><li>what you have bought, so a purchase is not lost with the phone</li><li>your settings: appearance, board style, tile material, sound and haptics</li><li><strong>every level you have built, including drafts you have never published</strong>, and every community level you have played, with your best move count on it</li></ul>
+<ul><li>every level you have completed, your best move count for each, your stars, how many times you played it, and whether you solved it without an undo or a hint</li><li>the highest level you have unlocked and the one you last played, including the half-finished position on the board if you left mid-level</li><li>your daily streak, your longest streak and your daily results — for each date you played, your move count, the puzzle's optimal count, and the sequence of swipes that solved it</li><li>your lifetime statistics — total moves, undos, restarts, hints used, levels skipped, dead ends reached and time spent playing</li><li>which of the in-game awards you have earned, <strong>and which of their rewards you have already collected</strong></li><li>which of this week's daily goals you have met and what you have collected from the weekly chest</li><li>how many hints and jokers you own, and how many you have ever earned and spent</li><li>the free daily hints you have left and when they last refilled</li><li>the name you chose to appear under on leaderboards and beside published levels</li><li>what you have bought, so a purchase is not lost with the phone</li><li>your settings: appearance, board style, tile material and sound</li><li><strong>every level you have built, including drafts you have never published</strong>, and every community level you have played, with your best move count on it</li><li>which twist explanation cards you have been shown, and which store offers you have already been shown — so a new phone does not repeat either</li></ul>
 <p>That last one surprises people, so it is stated plainly: an unpublished draft is still copied to your account. It is not visible to anyone else and it is not published by being synced — it is there so that building a level on one phone and finding it on another works at all. Deleting the level deletes it from the account too.</p>
-<p><strong>What is never sent.</strong> Nothing about the device itself — no advertising ID, no phone model, no network operator, no contacts, no location.</p>
+<p><strong>What is never sent.</strong> Nothing about the device itself — no advertising ID, no phone model, no network operator, no contacts, no location. Nor your cached friends list: that is other people's data, it is read from the server every time the list opens, and the copy kept on your device exists only so the list still works with no connection.</p>
 <p><strong>Your nickname</strong> is sent when you publish a level or rate one, and — where the friends feature is switched on — with your profile, which the app keeps up to date so the people you have added see current figures rather than stale ones. Section <a href="#37-your-player-account">3.7</a> lists everything that profile contains.</p>
 <p><strong>Two people, one phone.</strong> If somebody else signs in on your device, the game clears the previous player's data from the phone first rather than merging the two accounts together. Their game stays safe on their own account.</p>
 <p><strong>Legal basis (EEA/UK):</strong> performance of a contract you asked for (Art. 6(1)(b) GDPR) — you cannot have progress that follows you between devices without something to recognise you by.</p>
@@ -449,24 +464,25 @@
 <td>Not a runtime prompt — Android grants it at install</td>
 </tr>
 <tr>
-<td>Vibration</td>
-<td>The gentle tick when a piece slides. Uses the standard web Vibration API and asks for nothing about you</td>
-<td>Turn haptics off in <strong>Settings</strong></td>
-</tr>
-<tr>
 <td>Notifications</td>
-<td>Only so a friend can tell you they are waiting for you in a game. Asked for the first time you open <strong>Friends</strong>, never at launch</td>
-<td>Yes — decline the prompt, or turn it off in Android settings. Nothing else changes</td>
+<td>So a friend's challenge or invitation reaches you while the game is closed, and so we can occasionally tell you something about the game itself. Asked on the <strong>second</strong> time you open <strong>Friends</strong>, a few seconds in, and never at launch</td>
+<td>Yes — decline the prompt, turn it off in Android settings, or switch it off in <strong>Settings → Privacy</strong>, which deletes the token so nothing is sent at all. Nothing else changes</td>
 </tr>
 </tbody></table></div>
 <p>The app does <strong>not</strong> request location, camera, microphone, contacts, calendar, photos, files, storage, phone state, or nearby devices. It has no code that could use them.</p>
 <h3 id="notifications-and-what-refusing-costs-you">Notifications, and what refusing costs you</h3>
-<p>If you refuse, <strong>you lose the banner and nothing else.</strong> An invitation is stored in your account either way, so it is waiting on the Friends tab the next time you open the game — with the count on the tab, exactly as it would have been. With the game open, the invitation still appears the moment it is sent.</p>
-<p>To send a notification at all we store one <strong>registration token</strong> for this install, provided by Google's Firebase Cloud Messaging, alongside your player identifier and the two-letter code for the language you read — so the notice is written in your language rather than ours. The token identifies a <em>device</em>, not you, and it is deleted when you delete your account, when you turn notifications off inside the game, or when the app is uninstalled.</p>
-<p>We send Google's delivery service the token, the room code and the name of the friend inviting you. Nothing else — no progress, no puzzle history, and no text anybody typed.</p>
+<p>If you refuse, <strong>you lose the banner and nothing else that matters.</strong> A challenge or an invitation is stored in your account either way, so it is waiting on the Friends tab the next time you open the game — with the count on the tab, exactly as it would have been. With the game open, it still appears the moment it is sent.</p>
+<p><strong>What we send you.</strong> Two kinds of thing, and we would rather name both than imply there is only one:</p>
+<ol><li><strong>Something another player did</strong> — a friend challenged you, invited you to a round, or sent you a friend request. These are generated by the game itself, from a fixed table of translations, and they are the reason the permission is asked for on the Friends tab.</li><li><strong>Notices from us about the game</strong> — a new event chapter, the levels that drop during it, and, if we build it, a reminder that today's puzzle is waiting. These are written by us and go to everybody; they are not chosen based on anything you have done in the game, and nothing you have played decides whether you get one.</li></ol>
+<p>You can stop both at once. <strong>Settings → Privacy → Allow notifications</strong> deletes this device's token from our server, so nothing is sent at all — which is a stronger thing than Android's own switch, and it is why the control exists inside the game as well as in the system settings. There is deliberately no way to keep one kind and refuse the other; if that ever changes, this section changes with it.</p>
+<p><strong>Updated on 23 August 2026.</strong> Until that date this section said notifications were used for friend invitations and nothing else, and the in-app prompt said the same. That was true of the app as built, and it stopped being the plan, so both were changed <em>before</em> anything of the second kind was sent.</p>
+<p>To send a notification at all we store one <strong>registration token</strong> for this install, provided by Google's Firebase Cloud Messaging, alongside your player identifier, the two-letter code for the language you read — so the notice is written in your language rather than ours — and your device's clock setting, so a notice arrives at a sensible hour where you are rather than in the middle of your night.</p>
+<p>The token identifies a <em>device</em>, not you, and all of it is deleted when you delete your account, when you turn notifications off inside the game, or when the app is uninstalled.</p>
+<p>We send Google's delivery service the token and the words of the notice — for a challenge, that is the room or challenge code and the display name of the friend who sent it. Nothing else: no progress, no puzzle history, and no text anybody typed.</p>
 <hr>
 <h2 id="5-analytics-conditional">5. Analytics — <em>conditional</em></h2>
-<blockquote><p><strong>Status: </strong>NOT ACTIVE<strong> — no analytics endpoint is configured and no analytics SDK is installed.</strong> This section applies only when an analytics provider is switched on. At launch, the app ships with analytics disabled and no analytics SDK bundled.</p></blockquote>
+<blockquote><p><strong>Status: </strong>NOT ACTIVE<strong> — no analytics endpoint is configured and no analytics SDK is installed.</strong> This section applies only when an analytics provider is switched on. At launch, the app ships with analytics disabled and no analytics SDK bundled.</p>
+<p><strong>There is also no analytics switch in Settings, as of 23 August 2026.</strong> There was one, called "Share anonymous stats". It governed a transmission that has never happened: no endpoint has ever been configured, so no gameplay event has ever left a device, and a control over nothing is not a control. It was removed rather than left there implying otherwise. <strong>If analytics is ever switched on, the switch comes back with it</strong> — for a developer established in the EU, telemetry that is not strictly necessary needs consent that is given rather than withheld, so the endpoint and the consent control ship together or not at all.</p></blockquote>
 <p>If and when analytics is enabled, we would collect <strong>gameplay telemetry only</strong>, to find out which levels are too hard and where players stop playing.</p>
 <p><strong>What would be sent:</strong> the name of the event (for example <code>level_completed</code>), and, where relevant: the level identifier, the chapter, your move count, the puzzle's optimal move count, stars earned, how long the level took, how many times you restarted or undid, and — for settings changes — which setting you changed and its new value.</p>
 <p><strong>What would never be sent:</strong> your name, email, phone number, contacts, location, IP-derived precise location, the contents of any message, or any free text you type.</p>
@@ -499,8 +515,8 @@
 <p>When advertising is enabled, the app declares the <code>AD_ID</code> permission, as Google requires of any app that reads this identifier.</p>
 <h3 id="74-consent-in-the-eea-uk-and-switzerland">7.4 Consent in the EEA, UK and Switzerland</h3>
 <p>If you are in the European Economic Area, the United Kingdom or Switzerland, the app shows a consent form the first time it launches, built with <strong>Google's User Messaging Platform (UMP)</strong> and operating under the IAB Transparency &amp; Consent Framework. It asks separately about personalised advertising and about the other purposes your data may be used for.</p>
-<ul><li><strong>No ad request is made, and no analytics event is sent, before you answer.</strong></li><li>If you decline personalisation you still get ads, and they still pay out the hint; they are simply chosen without profiling you.</li><li>You can change your answer at any time from <strong>Settings → Privacy options</strong>, which reopens the same form.</li></ul>
-<p>Outside those regions the app follows the applicable local rules — including, for residents of US states with such laws, the right to opt out of "sale" or "sharing" of personal information for cross-context behavioural advertising. Use the same <strong>Settings → Privacy options</strong> control, or contact us at support.bakerly.apps@gmail.com.</p>
+<ul><li><strong>No ad request is made, and no analytics event is sent, before you answer.</strong></li><li>If you decline personalisation you still get ads, and they still pay out the hint; they are simply chosen without profiling you.</li><li>You can change your answer at any time from <strong>Settings → Privacy</strong>, which reopens the same form.</li></ul>
+<p>Outside those regions the app follows the applicable local rules — including, for residents of US states with such laws, the right to opt out of "sale" or "sharing" of personal information for cross-context behavioural advertising. Use the same <strong>Settings → Privacy</strong> control, or contact us at support.bakerly.apps@gmail.com.</p>
 <h3 id="75-what-we-get">7.5 What we get</h3>
 <p>We do not receive your advertising ID. Our own view of advertising is the aggregate revenue and impression reporting Google gives us in the AdMob console.</p>
 <hr>
@@ -553,9 +569,15 @@
 <td><strong>Settings → Delete account</strong>, or remove the friend</td>
 </tr>
 <tr>
-<td>Rounds played with friends, and your results in them <em>(conditional)</em></td>
+<td>A round in progress with friends <em>(conditional)</em></td>
 <td>Supabase (our server), Frankfurt</td>
-<td><strong>Seven days</strong>, or until you delete your account, whichever is sooner. The round itself is removed with everything in it</td>
+<td><strong>Seven days</strong>, or until you delete your account, whichever is sooner. The room itself is removed with everything in it</td>
+<td><strong>Settings → Delete account</strong></td>
+</tr>
+<tr>
+<td>The record of a finished round — when it was, who was in it, where each of you came, and what it cost <em>(conditional)</em></td>
+<td>Supabase (our server), Frankfurt</td>
+<td><strong>Until you delete your account.</strong> The room is gone in a week; this outlives it deliberately, so that "who has won more" is a question the game can still answer</td>
 <td><strong>Settings → Delete account</strong></td>
 </tr>
 <tr>
@@ -580,7 +602,7 @@
 <td>Analytics events <em>(conditional)</em></td>
 <td>no analytics provider is used</td>
 <td>not applicable — no analytics data is collected</td>
-<td>Not individually deletable — see below. Stop future events by turning analytics off in <strong>Settings</strong>, or by withdrawing consent</td>
+<td>None are sent today — there is no endpoint and no switch (section 5). Were analytics ever switched on, the consent control returns with it, and events already queued are discarded rather than sent</td>
 </tr>
 <tr>
 <td>Crash reports</td>
@@ -624,8 +646,9 @@
 <h3 id="why-we-cannot-delete-individual-analytics-or-crash-records">Why we cannot delete individual analytics or crash records</h3>
 <p>Because those records carry <strong>no identifier of any kind</strong> (section 5), there is nothing in them that points back to you, and nothing we could match a deletion request against. We are not withholding a lookup — the lookup does not exist. If you emailed us asking us to delete your events, we would have no honest way to find them, and we will not ask you for extra personal information in order to try, because collecting identifying data to service a privacy request would make the situation worse rather than better.</p>
 <p>What you can actually do, and what it achieves:</p>
-<ul><li><strong>Withdraw consent</strong> via <strong>Settings → Privacy options</strong> (section 7.4). No analytics event is sent while consent is refused or withdrawn, and anything already queued on your device is discarded rather than sent later.</li><li><strong>Uninstall the app.</strong> Everything on your device goes with it, and nothing further is ever sent.</li><li>Records already received are deleted by our provider at the end of the retention period stated above, without any action from you.</li></ul>
-<blockquote><p><strong>Maintenance note (delete this block before publishing):</strong> the two controls referenced above — the in-app consent/analytics toggle in <strong>Settings → Privacy options</strong> (also promised in §7.4 and §11) — do <strong>not</strong> exist in the UI yet. The service layer supports them (<code>setAnalyticsEnabled</code>, <code>requestConsent</code>), but nothing calls them. They must be wired into the Settings sheet <strong>before</strong> analytics or ads are switched to ACTIVE, or this policy describes a control the app does not have.</p></blockquote>
+<ul><li><strong>Withdraw consent</strong> via the consent control described in section 7.4. No analytics event is sent while consent is refused or withdrawn, and anything already queued on your device is discarded rather than sent later. Today the question does not arise: no analytics endpoint is configured, so nothing is ever queued or sent (section 5).</li><li><strong>Uninstall the app.</strong> Everything on your device goes with it, and nothing further is ever sent.</li><li>Records already received are deleted by our provider at the end of the retention period stated above, without any action from you.</li></ul>
+<blockquote><p><strong>Maintenance note (delete this block before publishing):</strong> the ads consent prompt promised in §7.4 and §11 does <strong>not</strong> exist in the UI yet. The service layer supports it (<code>requestConsent</code>) and nothing calls it. It must be wired in <strong>before</strong> ads are switched to ACTIVE, or this policy describes a control the app does not have.</p>
+<p>The analytics half of this note was resolved on 23 August 2026 in the other direction: rather than wire a switch to a transmission that does not happen, the switch was removed and §5 now says so plainly. The obligation moved rather than disappearing — configuring <code>VITE_ANALYTICS_ENDPOINT</code> is what brings both the switch and this note back.</p></blockquote>
 <p>If a future version ever does attach an identifier — or introduce an account — this policy will be updated <strong>before</strong> that version ships, and both an in-app and a web deletion route will be provided, as Google Play requires.</p>
 <hr>
 <h2 id="11-your-rights">11. Your rights</h2>
