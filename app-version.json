@@ -3,7 +3,7 @@
   "android": {
     "package": "com.bakerly.driftile",
     "minVersion": "1.0.0",
-    "latestVersion": "1.0.11",
+    "latestVersion": "1.0.12",
     "storeUrl": "https://play.google.com/store/apps/details?id=com.bakerly.driftile"
   }
 }
